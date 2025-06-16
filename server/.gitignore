@@ -1,0 +1,23 @@
+# Node modules
+node_modules/
+
+# Production build
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VSCode settings
+.vscode/
+
+# Optional: Ignore compiled TypeScript cache (if used)
+*.tsbuildinfo
