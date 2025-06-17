@@ -1,6 +1,7 @@
+"use client"
 import React from 'react'
 
-const Navbar = () => {
+const PropertyCard = () => {
   return (
     <div>
       
@@ -8,4 +9,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default PropertyCard

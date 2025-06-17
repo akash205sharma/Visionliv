@@ -28,7 +28,7 @@ Mock payment integration (e.g., Stripe).
  you can use clean designs from platforms like Dribbble or Figma. Take inspiration from Airbnb, NomadX, etc.
 
 🧠 To Submit with Your Work:
-What tech stack did you choose and why?
+What tech stack did you choose and why
 Are you comfortable building both frontend and backend if UI is provided?
 Suggest 2 unique features you’d add to improve Airbnb.
 Briefly explain how you’d secure and scale the app.
