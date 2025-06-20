@@ -34,3 +34,5 @@ Suggest 2 unique features you’d add to improve Airbnb.
 Briefly explain how you’d secure and scale the app.
 📅 Timeline:
 Please submit the core version in 7–14 days. Focus on clean code, clarity, and working features.
+
+

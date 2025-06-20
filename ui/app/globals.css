@@ -1,4 +1,12 @@
 @import "tailwindcss";
+
+/* In globals.css */
+.input {
+  @apply p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-300;
+}
+
+
+
 /* 
 :root {
   --background: #ffffff;

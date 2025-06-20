@@ -1,7 +1,6 @@
-"use client"
 import React from 'react'
 
-const PropertyCard = () => {
+const page = () => {
   return (
     <div>
       
@@ -9,4 +8,4 @@ const PropertyCard = () => {
   )
 }
 
-export default PropertyCard
+export default page
