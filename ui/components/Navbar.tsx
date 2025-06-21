@@ -46,7 +46,7 @@ const Navbar = () => {
 
   return (
     <div className=' h-20 w-full bg-gray-100 flex justify-between p-5'>
-      <div className='text-4xl text-blue-600 font-bold '> VisionLiv </div>
+      <Link href={"/"} className='text-4xl text-blue-600 font-bold '> VisionLiv </Link>
       <span ref={menuRef} className='relative font-semibold flex justify-center items-center gap-6'>
 
         {session.status == "logged" ?
