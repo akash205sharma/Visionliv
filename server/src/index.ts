@@ -14,11 +14,12 @@ const port = process.env.PORT || 4000
 const ORIGIN = process.env.ORIGIN
 
 app.use(
-    cors({
-        origin: `${ORIGIN}`,
-        credentials: true,
-    })
+  cors({
+    origin: "https://visionliv.vercel.app", // ✅ specific origin
+    credentials: true, // ✅ allow cookies/headers
+  })
 );
+
 
 
 app.use(express.json());
