@@ -4,6 +4,11 @@ import { useSession } from '@/context/SessionContext';
 import { Star } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import dynamic from 'next/dynamic'
+
+// Dynamically import Map without SSR
+const Map = dynamic(() => import('@/components/Map'), { ssr: false })
+
 
 interface PropertyDetails {
   _id: string;
@@ -168,6 +173,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
   const sessionContext = useSession();
   const session = sessionContext?.session;
   const [isbooked, setIsBooked] = useState(false);
+  const [latLng, setLatLng] = useState<{ lat: number; lng: number } | null>(null)
 
   useEffect(() => {
     const fetchListingAndBooking = async () => {
@@ -207,6 +213,27 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
 
     fetchListingAndBooking()
   }, [session])
+
+  useEffect(() => {
+    const getCoordinates = async () => {
+      try {
+        const location = encodeURIComponent(property?.location || "")
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
+        const data = await res.json()
+        if (data.length > 0) {
+          setLatLng({
+            lat: parseFloat(data[0].lat),
+            lng: parseFloat(data[0].lon),
+          })
+        }
+        console.log(data)
+      } catch (error) {
+        console.error('Failed to fetch location:', error)
+      }
+    }
+
+    getCoordinates()
+  }, [property?.location])
 
 
   const handleBook = async () => {
@@ -267,6 +294,11 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
         <p className="mt-6 text-gray-700 leading-relaxed">
           {property.description}
         </p>
+        <br />
+        Location
+        {latLng?
+        <Map lat={latLng.lat} lng={latLng.lng} />
+        :<div>Location Not Found</div> }
 
 
         <div className="flex flex-col md:flex-row gap-4 mt-8 items-center">

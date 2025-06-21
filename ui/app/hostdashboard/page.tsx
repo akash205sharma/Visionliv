@@ -34,7 +34,7 @@ export default function HostDashboard() {
   };
 
   useEffect(() => {
-    if (!session.status) router.push("/login")
+    if (!session.status || !session.ishost ) router.push("/login")
   }, [])
 
   useEffect(() => {

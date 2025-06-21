@@ -60,12 +60,13 @@ const Navbar = () => {
           <Menu />
         </div>
         {menubar && (
-          <div className="absolute top-12 left-0 bg-white shadow-lg rounded-md p-4 w-fit z-50">
+          <div className="absolute top-12 right-0 bg-white text-[15px] shadow-lg rounded-md p-4 w-[150px] z-50">
             {/* Your menu content here */}
             <ul className="space-y-2">
               <li onClick={() => { router.push("/") }} className="hover:text-blue-500 cursor-pointer">Home</li>
+              <li onClick={() => { router.push("/profile") }} className="hover:text-blue-500 cursor-pointer">Profile</li>
               <li onClick={() => { router.push("/bookings") }} className="hover:text-blue-500 cursor-pointer">Bookings</li>
-              {session.ishost? <li onClick={() => { router.push("/hostdashboard") }} className="hover:text-blue-500 cursor-pointer">Host Dashboard</li>:null}
+              {session.ishost? <li onClick={() => { router.push("/hostdashboard") }} className="hover:text-blue-500  cursor-pointer">Host Dashboard</li>:null}
               {session.status == "logged" ?
                 <li onClick={logout} className="hover:text-red-500 cursor-pointer">Logout</li>
                 : <li onClick={() => { router.push("/login") }} className="hover:text-red-500 cursor-pointer">Login </li>

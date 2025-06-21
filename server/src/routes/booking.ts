@@ -87,6 +87,20 @@ router.post("/check", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/user/:id", async (req: Request, res: Response) => {
+  try {
+    await connectDb();
+
+    const bookings = await Booking.find({ userId: req.params.id })
+      .populate("listingId");
+
+    res.status(200).json({ bookings });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch bookings" });
+  }
+});
+
 
 export default router;
 
