@@ -30,9 +30,11 @@ app.use("/listings", listingRoutes);
 app.use("/bookings", bookingRoutes);
 
 app.get("/", async (req, res) => {
-    res.send("hello");
+  res.send("hello");
+})
+app.get('/ping', (req, res) => {
+  res.send('pong 🏓')
 })
 
-
-app.listen(port, () => console.log("kya hukum hai mere aka",port));
+app.listen(port, () => console.log("kya hukum hai mere aka", port));
 
