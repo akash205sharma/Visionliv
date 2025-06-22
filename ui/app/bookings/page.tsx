@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from '@/context/SessionContext';
 import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 interface Booking {
   _id: string;
@@ -50,7 +51,7 @@ export default function page() {
       ) : (
         <div className="space-y-6">
           {bookings.map((booking) => (
-            <div key={booking._id} className="border p-4 rounded-xl shadow flex gap-4">
+            <Link href={`property/${booking.listingId._id}`} key={booking._id} className="border p-4 rounded-xl shadow flex gap-4">
               <img src={booking.listingId.image} alt="Listing" className="w-32 h-32 object-cover rounded-md" />
               <div className="flex-1">
                 <h2 className="text-xl font-semibold">{booking.listingId.location}</h2>
@@ -60,7 +61,7 @@ export default function page() {
                 <p className="text-sm text-gray-600">Total: ₹{booking.totalAmount}</p>
                 <p className="text-xs text-gray-500">Booked on {new Date(booking.bookingDate).toLocaleDateString()}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
