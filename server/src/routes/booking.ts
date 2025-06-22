@@ -57,7 +57,7 @@ router.post("/", async (req: Request, res: Response) => {
       },
       { new: true }
     );
-    
+
 
     res.status(201).json({
       message: "Booking created successfully",
@@ -98,6 +98,35 @@ router.get("/user/:id", async (req: Request, res: Response) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch bookings" });
+  }
+});
+
+router.delete("/:bookingId", async (req: Request, res: Response) => {
+  try {
+    await connectDb();
+
+    const { bookingId } = req.params;
+    const { userId, listingId } = req.query;
+
+    await Booking.findByIdAndDelete(bookingId);
+
+    await User.findByIdAndUpdate(userId, {
+      $pull: { bookings: bookingId },
+    });
+
+    await Listing.findByIdAndUpdate(listingId, {
+      $set: {
+        booking: {
+          isbooked: false,
+          userId: null,
+        },
+      },
+    });
+
+    res.status(200).json({ message: "Booking cancelled successfully" });
+  } catch (error) {
+    console.error("❌ Error cancelling booking:", error);
+    res.status(500).json({ message: "Failed to cancel booking" });
   }
 });
 

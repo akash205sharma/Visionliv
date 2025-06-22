@@ -20,6 +20,7 @@ interface PropertyDetails {
   description: string;
 }
 interface BookingDetails {
+  bookingId: string;
   isbooked: boolean;
   bookingDate: string;
   checkIn: string;
@@ -30,7 +31,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
   const router = useRouter()
   const { id } = React.use(params)
   const [property, setProperty] = useState<PropertyDetails>()
-  const [bookingData, setBookingData] = useState<BookingDetails>({ isbooked: false, bookingDate: "", checkIn: "", checkOut: "" })
+  const [bookingData, setBookingData] = useState<BookingDetails>({ bookingId: "", isbooked: false, bookingDate: "", checkIn: "", checkOut: "" })
   const [latLng, setLatLng] = useState<{ lat: number; lng: number } | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -58,6 +59,7 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
             const bookingData = await bookingRes.json()
             const b = bookingData.isBooked
             setBookingData({
+              bookingId: b._id,
               isbooked: true,
               bookingDate: b.bookingDate,
               checkIn: b.checkIn,
@@ -110,7 +112,27 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
           totalAmount: property?.price,
         }),
       })
-      if (res.ok) setBookingData({ ...bookingData, isbooked: true })
+      if (res.ok) {
+        const data = await res.json();
+        setBookingData({ ...bookingData, bookingId: data.booking?._id, isbooked: true })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  const handelCancel = async () => {
+    if (!bookingData.isbooked) {
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings/${bookingData.bookingId}?userId=${session._id}&listingId=${id}`,
+        { method: 'DELETE' }
+      );
+      if (res.ok) {
+        setBookingData({ bookingId: "", isbooked: false, bookingDate: "", checkIn: "", checkOut: "" })
+      }
     } catch (error) {
       console.error(error)
     }
@@ -146,7 +168,15 @@ export default function PropertyDetails({ params }: { params: Promise<{ id: stri
         <p className="text-gray-600 text-base leading-relaxed">{property.description}</p>
 
         {bookingData?.isbooked ? (
-          <div className="bg-green-50 p-4 rounded-lg shadow-inner border border-green-200">
+          <div className="relative bg-green-50 p-4 rounded-lg shadow-inner border border-green-200">
+            <div onClick={handelCancel} className=' cursor-pointer absolute ml-2 mt- px-3 py-3 w-fit right-2 top-2 text-xs
+                bg-gradient-to-r from-rose-500 to-pink-600 
+                text-white font-semibold 
+                rounded-xl shadow-md 
+                hover:from-rose-600 hover:to-pink-700 
+                hover:shadow-lg 
+                active:scale-95 active:shadow-sm 
+                transition duration-200 ease-in-out transform"' >Cancel Booking</div>
             <p className="text-green-800 font-semibold mb-2">Already Booked</p>
             <p className="text-sm text-gray-700">Check-in: {new Date(bookingData.checkIn).toLocaleDateString()}</p>
             <p className="text-sm text-gray-700">Check-out: {new Date(bookingData.checkOut).toLocaleDateString()}</p>
