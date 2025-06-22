@@ -5,6 +5,8 @@ import authRoutes from './routes/auth';
 import listingRoutes from './routes/listings'
 import bookingRoutes from './routes/booking'
 import cookieParser from "cookie-parser";
+import stripeRoutes from './routes/stripe';
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -15,7 +17,7 @@ const ORIGIN = process.env.ORIGIN
 
 app.use(
   cors({
-    origin: "https://visionliv.vercel.app", // ✅ specific origin
+    origin: `${ORIGIN}`, // ✅ specific origin
     credentials: true, // ✅ allow cookies/headers
   })
 );
@@ -28,6 +30,7 @@ app.use(cookieParser())
 app.use("/auth", authRoutes);
 app.use("/listings", listingRoutes);
 app.use("/bookings", bookingRoutes);
+app.use('/stripe', stripeRoutes);
 
 app.get("/", async (req, res) => {
   res.send("hello");
