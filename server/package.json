@@ -9,7 +9,7 @@
     "add-build": "git add dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
-    "dev":"nodemon"
+    "dev": "nodemon"
   },
   "pre-commit": [
     "ts.check",
@@ -27,6 +27,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.16.0",
+    "nodemon": "^3.1.14",
     "stripe": "^18.2.1",
     "zod": "^3.25.67"
   },

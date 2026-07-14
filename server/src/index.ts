@@ -6,8 +6,11 @@ import listingRoutes from './routes/listings'
 import bookingRoutes from './routes/booking'
 import cookieParser from "cookie-parser";
 import stripeRoutes from './routes/stripe';
-
 import dotenv from "dotenv";
+
+import { setServers } from "node:dns/promises";
+setServers(["1.1.1.1", "8.8.8.8"]);
+
 dotenv.config();
 
 
@@ -39,5 +42,5 @@ app.get('/ping', (req, res) => {
   res.send('pong 🏓')
 })
 
-app.listen(port, () => console.log("kya hukum hai mere aka", port));
+app.listen(port, () => console.log("server running", port));
 
